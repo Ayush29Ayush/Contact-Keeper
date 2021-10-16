@@ -17,7 +17,7 @@ module.exports = router
 // @desc.    Auth user & get token
 // @access   Public route
 
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
     res.send('Log in user');
 });
 
