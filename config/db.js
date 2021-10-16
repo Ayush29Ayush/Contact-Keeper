@@ -4,16 +4,11 @@ const db = config.get("mongoURI");
 
 //mongoose returns promises
 
-// Write useNewUrlParser: true,useCreateIndex: true,useFindAndModify: false to avoid warnings
 //! Without async await
 const connectDB = () => {
   mongoose
-    .connect(db, {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    })
-    .then(() => console.log("MongoDB Connected"))
+    .connect(db)
+    .then(() => console.log("MongoDB connected"))
     .catch((err) => {
       console.error(err.message);
       process.exit(1);
@@ -21,3 +16,16 @@ const connectDB = () => {
 };
 
 module.exports = connectDB;
+
+//! With async await 
+// const connectDB = async () => {
+//     try{
+//         await mongoose.connect(db);
+//         console.log('MongoDB connected...');
+//     } catch (err){
+//         console.error(err.message);
+//         process.exit(1);
+//     }
+// };
+ 
+// module.exports = connectDB;
