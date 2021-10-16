@@ -1,6 +1,10 @@
 const express = require("express");
+const connectDB = require('./config/db')
 
 const app = express();
+
+//! Connect Database
+connectDB();
 
 //! This is the Home Page route
 // app.get('/', (req,res)=> res.send('Hello World'))
