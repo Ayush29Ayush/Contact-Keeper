@@ -10,3 +10,15 @@ router.get('/', (req, res) => {
 });
 
 module.exports = router
+
+
+
+// @route    POST api/auth
+// @desc.    Auth user & get token
+// @access   Public route
+
+router.get('/', (req, res) => {
+    res.send('Log in user');
+});
+
+module.exports = router
