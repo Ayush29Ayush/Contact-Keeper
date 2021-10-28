@@ -8,7 +8,7 @@ const User = require('../models/User')
 // @access   Public route
 
 router.post('/', (req, res) => {
-    res.send('Register a user');
+    res.send(req.body);
 });
 
 //! Example to understand the router path , basically it concatenates(adds on/merges them) the base url with the url here
