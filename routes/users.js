@@ -25,7 +25,7 @@ router.post(
       min: 6,
     }),
   ],
-  (req, res) => {
+  async (req, res) => {
     // res.send(req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -33,13 +33,18 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    res.status(200).send("Passed , no errors")
+    // res.status(200).send("Passed , no errors")
+    const { name, email, password } = req.body;
+
+    try {
+      // find a User with the email provided by the user, check if that user with email address already exists
+      let user = await User.findOne({ email: email });
+
+      if (user) {
+        return res.status(400).json({ msg: "User already exists" });
+      }
+    } catch (err) {}
   }
 );
-
-//! Example to understand the router path , basically it concatenates(adds on/merges them) the base url with the url here
-// router.post('/ayush', (req, res) => {
-//     res.send('Register a ayush');
-// });
 
 module.exports = router;
