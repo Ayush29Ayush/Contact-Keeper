@@ -47,7 +47,7 @@ router.post(
         email,
         phone,
         type,
-        user: req.user.id
+        user: req.user.id,
       });
 
       const contact = await newContact.save();
@@ -55,7 +55,7 @@ router.post(
       res.json(contact);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server Error...")
+      res.status(500).send("Server Error...");
     }
   }
 );
@@ -64,8 +64,38 @@ router.post(
 // @desc.    Update contact
 // @access   Private route
 
-router.put("/:id", (req, res) => {
-  res.send("Update contact");
+router.put("/:id", auth, async (req, res) => {
+  // res.send("Update contact");
+  const { name, email, phone, type } = req.body;
+
+  //! Build a contact object
+  const contactFields = {};
+  if (name) contactFields.name = name;
+  if (email) contactFields.email = email;
+  if (phone) contactFields.phone = phone;
+  if (type) contactFields.type = type;
+
+  try {
+    let contact = await Contact.findById(req.params.id);
+
+    if (!contact) return res.status(404).json({ msg: "Contact not found..." });
+
+    //! Make sure user owns contact
+    if (contact.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "Not Authorized..." });
+    }
+
+    contact = await Contact.findByIdAndUpdate(
+      req.params.id,
+      { $set: contactFields },
+      { new: true } // this means that it doesn't exist then just create it
+    );
+
+    res.json(contact);
+  } catch (err) {
+    console.error();
+    res.status(500).send("Server Error...");
+  }
 });
 
 // @route    DELETE api/contacts/:id
