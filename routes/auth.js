@@ -4,6 +4,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
+const auth = require("../middleware/auth");
 const { check, validationResult } = require("express-validator/check");
 
 const User = require("../models/User");
@@ -13,8 +14,16 @@ const { json } = require("express");
 // @desc.    Get logged in user
 // @access   Private route
 
-router.get("/", (req, res) => {
-  res.send("Get logged in user");
+router.get("/", auth, async (req, res) => {
+  // res.send("Get logged in user");
+  try {
+    // select('-password') means remove password from the returned data since User.findById will send all the data i.e id and password.
+    const user = await User.findById(req.user.id).select("-password");
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
 });
 
 module.exports = router;
@@ -39,7 +48,7 @@ router.post(
     const { email, password } = req.body;
 
     try {
-        //! Finding user by email
+      //! Finding user by email
       let user = await User.findOne({ email });
 
       if (!user) {
@@ -76,8 +85,8 @@ router.post(
         }
       );
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error...')
+      console.error(err.message);
+      res.status(500).send("Server Error...");
     }
   }
 );
