@@ -37,6 +37,8 @@ const ContactState = (props) => {
         type: "professional",
       },
     ],
+    // Whenever we click edit in UI , object will be put into this "current" state and we can change things in the UI based on that.
+    current: null
   };
   //! State allows us to access anything in our state.
   //! Dispatch allows us to dispatch objects to the reducer.
@@ -55,8 +57,14 @@ const ContactState = (props) => {
   };
 
   // Set Current Contact
+  const setCurrent = (contact) => {
+    dispatch({ type: SET_CURRENT, payload: contact });
+  };
 
   // Clear Current Contact
+  const clearCurrent = () => {
+    dispatch({ type: CLEAR_CURRENT });
+  };
 
   // Update Contact
 
