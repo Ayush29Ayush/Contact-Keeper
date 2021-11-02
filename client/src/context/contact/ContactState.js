@@ -38,7 +38,8 @@ const ContactState = (props) => {
       },
     ],
     // Whenever we click edit in UI , object will be put into this "current" state and we can change things in the UI based on that.
-    current: null
+    current: null,
+    filtered: null
   };
   //! State allows us to access anything in our state.
   //! Dispatch allows us to dispatch objects to the reducer.
@@ -72,8 +73,14 @@ const ContactState = (props) => {
   };
 
   // Filter Contact
+  const filterContacts = (text) => {
+    dispatch({ type: FILTER_CONTACTS, payload: text });
+  };
 
   // Clear Filter
+  const clearCurrent = () => {
+    dispatch({ type: CLEAR_FILTER });
+  };
 
   return (
     <ContactContext.Provider
