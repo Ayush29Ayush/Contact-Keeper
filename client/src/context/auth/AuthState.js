@@ -1,4 +1,5 @@
 import React, { useReducer } from "react";
+import axios from "axios";
 import AuthContext from "./authContext";
 import authReducer from "./authReducer";
 import {
@@ -9,16 +10,16 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
 } from "../types";
 
 const AuthState = (props) => {
   const initialState = {
-    token: localStorage.getItem('token'),
+    token: localStorage.getItem("token"),
     isAuthenticated: null,
     loading: true,
     user: null,
-    error: null
+    error: null,
   };
   //! State allows us to access anything in our state.
   //! Dispatch allows us to dispatch objects to the reducer.
@@ -28,6 +29,28 @@ const AuthState = (props) => {
   // Load User
 
   // Register User
+  const register = async (formData) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    try {
+      // since we have our proxy defined in package.json , we dont need localhost:5000 wala URL here , just directly write /api/users
+      const res = await axios.post("/api/users", formData, config);
+
+      dispatch({
+        type: REGISTER_SUCCESS,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: REGISTER_FAIL,
+        payload: err.response.data.msg,
+      });
+    }
+  };
 
   // Login User
 
