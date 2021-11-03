@@ -39,11 +39,23 @@ const Register = () => {
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name</label>
-          <input type="text" name="name" value={name} onChange={onChange} required />
+          <input
+            type="text"
+            name="name"
+            value={name}
+            onChange={onChange}
+            required
+          />
         </div>
         <div className="form-group">
           <label htmlFor="email">Email Address</label>
-          <input type="email" name="email" value={email} onChange={onChange} required />
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={onChange}
+            required
+          />
         </div>
         <div className="form-group">
           <label htmlFor="password">Password</label>
@@ -54,6 +66,7 @@ const Register = () => {
             onChange={onChange}
             required
             minLength="6"
+            // placeholder="Password"
           />
         </div>
         <div className="form-group">
@@ -65,6 +78,7 @@ const Register = () => {
             onChange={onChange}
             required
             minLength="6"
+            // placeholder="Confirm Password"
           />
         </div>
         <input
