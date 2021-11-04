@@ -21,7 +21,8 @@ const Register = (props) => {
       setAlert(error, "danger");
       clearErrors();
     }
-    
+    //! To remove errors 
+    // eslint-disable-next-line
   }, [error, isAuthenticated, props.history]);
 
   //password2 is just for password confirmation
