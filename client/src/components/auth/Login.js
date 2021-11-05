@@ -1,11 +1,32 @@
 //! This will be Login form
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import AuthContext from "../../context/auth/authContext";
+import AlertContext from "../../context/alert/alertContext";
 
 const Login = () => {
-  
+  const alertContext = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
+
+  const { setAlert } = alertContext;
+  const { login, error, clearErrors, isAuthenticated } = authContext;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      // redirects to the home page if it's authenticated
+      props.history.push("/");
+    }
+
+    if (error === "Invalid Credentials") {
+      setAlert(error, "danger");
+      clearErrors();
+    }
+    //! To remove errors 
+    // eslint-disable-next-line
+  }, [error, isAuthenticated, props.history]);
+
   const [user, setUser] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const { email, password } = user;
@@ -13,10 +34,10 @@ const Login = () => {
   // Everytime we type it's going to enter the correct piece of state
   const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
-      e.preventDefault();
-      console.log('Login submit')
-  }
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log("Login submit");
+  };
 
   return (
     <div className="form-container">
