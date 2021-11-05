@@ -73,7 +73,31 @@ const AuthState = (props) => {
   };
 
   // Login User
-  const login = () => console.log("login");
+  // const login = () => console.log("login");
+  const login = async (formData) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    try {
+      // since we have our proxy defined in package.json , we dont need localhost:5000 wala URL here , just directly write /api/users
+      const res = await axios.post("/api/auth", formData, config);
+
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+
+      loadUser();
+    } catch (err) {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: err.response.data.msg,
+      });
+    }
+  };
 
   // Logout
   const logout = () => console.log("logout");
