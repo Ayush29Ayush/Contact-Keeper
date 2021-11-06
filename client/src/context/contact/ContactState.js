@@ -17,7 +17,8 @@ import {
 
 const ContactState = (props) => {
   const initialState = {
-    contacts: [],
+    // contacts: [],
+    contacts: null,
     // Whenever we click edit in UI , object will be put into this "current" state and we can change things in the UI based on that.
     current: null,
     filtered: null,
