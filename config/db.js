@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const config = require("config");
-// const db = config.get("mongoURI");
-require("dotenv").config();
+const db = config.get("mongoURI");
+// require("dotenv").config();
 
 //mongoose returns promises
 
@@ -22,8 +22,8 @@ require("dotenv").config();
 //! With async await
 const connectDB = async () => {
   try {
-    // await mongoose.connect(db);
-    await mongoose.connect(process.env.mongoURI);
+    await mongoose.connect(db);
+    // await mongoose.connect(process.env.mongoURI);
     console.log("MongoDB connected...");
   } catch (err) {
     console.error(err.message);
