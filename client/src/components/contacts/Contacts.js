@@ -1,6 +1,7 @@
 import React, { Fragment, useContext, useEffect } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import ContactItem from "./ContactItem";
+import Spinner from "../layout/Spinner";
 import ContactContext from "../../context/contact/contactContext";
 
 const Contacts = () => {
@@ -8,7 +9,7 @@ const Contacts = () => {
 
   const { contacts, filtered, getContacts, loading } = contactContext;
 
-  useEffect(()=>{
+  useEffect(() => {
     getContacts();
     // eslint-disable-next-line
   }, []);
@@ -19,23 +20,31 @@ const Contacts = () => {
 
   return (
     <Fragment>
-      <TransitionGroup>
-        {filtered !== null
-          ? filtered.map((contact) => (
-              <CSSTransition key={contact._id} timeout={1000} classNames="item">
-                <ContactItem contact={contact} />
-              </CSSTransition>
-            ))
-          : contacts.map((contact) => (
-              <CSSTransition key={contact._id} timeout={1000} classNames="item">
-                <ContactItem contact={contact} />
-              </CSSTransition>
-            ))}
-
-        {/* {contacts.map((contact) => (
-        <ContactItem key={contact.id} contact={contact} />
-      ))} */}
-      </TransitionGroup>
+      {contacts !== null && !loading ? (
+        <TransitionGroup>
+          {filtered !== null
+            ? filtered.map((contact) => (
+                <CSSTransition
+                  key={contact._id}
+                  timeout={1000}
+                  classNames="item"
+                >
+                  <ContactItem contact={contact} />
+                </CSSTransition>
+              ))
+            : contacts.map((contact) => (
+                <CSSTransition
+                  key={contact._id}
+                  timeout={1000}
+                  classNames="item"
+                >
+                  <ContactItem contact={contact} />
+                </CSSTransition>
+              ))}
+        </TransitionGroup>
+      ) : (
+        <Spinner />
+      )}
     </Fragment>
   );
 };
