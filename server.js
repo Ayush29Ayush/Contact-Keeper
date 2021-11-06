@@ -9,7 +9,7 @@ connectDB();
 
 //! Init Middleware
 // By doing this one can accept the body data
-app.use(express.json({ extended: false }));
+app.use(express.json());
 
 //! This is the Home Page route
 // app.get('/', (req,res)=> res.send('Hello World'))
